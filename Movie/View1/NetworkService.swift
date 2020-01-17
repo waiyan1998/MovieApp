@@ -18,7 +18,7 @@ protocol MovieServiceDelegate  : class  {
     func DidFinishGettingPopular   ( results : [Results]? , error : Error?)
     func DidFinishGettingNow_Playing ( results : [Results]? , error : Error?)
     func DidFinishSearching( results : [Results]? , error : Error?)
-    
+    func DidCatchingConnectionFailure (alert : UIAlertController)
 
 
 }
@@ -39,16 +39,19 @@ class MovieService {
         
         Alamofire.request(self.up_coming_url , method: .get , parameters: nil , encoding: URLEncoding.default , headers: nil)
                 .responseJSON { (Data) in
+                    if (self.CatchingConnection(Data))
+                    {
 
-                    let json = Data.result.value as! [String :Any]
-                   let jsonResult   = json["results"] as! [[String: Any]]
-                    
-                   let results =  Mapper<Results>().mapArray(JSONArray: jsonResult)
-                    
-                 self.delegate?.DidFinishGettingUpcoming(results: results , error: Data.result.error)
-                    
-         }
-    }
+                      let json = Data.result.value as! [String :Any]
+                      let jsonResult   = json["results"] as! [[String: Any]]
+
+                      let results =  Mapper<Results>().mapArray(JSONArray: jsonResult)
+
+                      self.delegate?.DidFinishGettingUpcoming(results: results , error: Data.result.error)
+                    }
+        }
+        
+      }
         
         
   
@@ -60,13 +63,15 @@ class MovieService {
        
         Alamofire.request(self.top_rated_url , method: .get , parameters: nil , encoding: URLEncoding.default , headers: nil)
             .responseJSON { (Data) in
+                if (self.CatchingConnection(Data))
+             {
                 let json = Data.result.value as! [String :Any]
                 let jsonResult   = json["results"] as! [[String: Any]]
 
                 let results =  Mapper<Results>().mapArray(JSONArray: jsonResult)
                 
                 self.delegate?.DidFinishGettingTop_rated(results: results , error: Data.result.error)
-
+             }
 
               }
         }
@@ -78,13 +83,15 @@ class MovieService {
        
         Alamofire.request(self.popular_url , method: .get , parameters: nil , encoding: URLEncoding.default , headers: nil)
             .responseJSON { (Data) in
+                if (self.CatchingConnection(Data))
+            {
                 let json = Data.result.value as! [String :Any]
                 let jsonResult   = json["results"] as! [[String: Any]]
                 
                 let results =  Mapper<Results>().mapArray(JSONArray: jsonResult)
                 
                 self.delegate?.DidFinishGettingPopular(results: results , error: Data.result.error)
-                
+            }
                 
         }
     }
@@ -94,18 +101,33 @@ class MovieService {
         
         Alamofire.request(self.now_playing_url , method: .get , parameters: nil , encoding: URLEncoding.default , headers: nil)
             .responseJSON { (Data) in
+                if (self.CatchingConnection(Data))
+            {
                 let json = Data.result.value as! [String :Any]
                 let jsonResult   = json["results"] as! [[String: Any]]
                 
                 let results =  Mapper<Results>().mapArray(JSONArray: jsonResult)
                 
                 self.delegate?.DidFinishGettingNow_Playing(results: results , error: Data.result.error)
-                
+            }
                 
         }
     }
     
-    
+    func CatchingConnection(_ response : DataResponse<Any>)  -> Bool{
+        
+        if (response.result.isFailure) {
+            print("Failed")
+            
+            let Alert = UIAlertController(title: "Connection Error" , message: "Please check your internet connection ", preferredStyle: .alert)
+                Alert.addAction(UIAlertAction(title: "Got it", style: .cancel, handler: nil))
+               delegate?.DidCatchingConnectionFailure(alert: Alert)
+            return false
+        }else{
+            return true
+        }
+        
+    }
     
     
     
@@ -120,7 +142,8 @@ func Search (keyword : String! )
 
         Alamofire.request(search_url , method: .get , parameters: nil , encoding: URLEncoding.default , headers: nil)
             .responseJSON { (Data) in
-                guard  let e = Data.error else {
+                if (self.CatchingConnection(Data))
+                {
                 let json = Data.result.value as! [String :Any]
                 let jsonResult   = json["results"] as! [[String: Any]]
                 let results =  Mapper<Results>().mapArray(JSONArray: jsonResult)
@@ -128,7 +151,7 @@ func Search (keyword : String! )
                 self.delegate?.DidFinishSearching(results: results , error: Data.result.error)
                     return
                 }
-                print(e)
+                
                 
                 }
 

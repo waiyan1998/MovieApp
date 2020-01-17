@@ -12,6 +12,8 @@ import ObjectMapper
 import Kingfisher
 
 class ViewController : UIViewController, MovieServiceDelegate {
+    
+    
  
     
     
@@ -74,7 +76,7 @@ class ViewController : UIViewController, MovieServiceDelegate {
     
     func DidFinishGettingUpcoming(results: [Results]?, error: Error?) {
         print("Up")
-        
+        self.Upcoming.removeAll()
         guard let e = error else {
             self.Upcoming = results!
          ColViews[0].reloadData()
@@ -87,6 +89,7 @@ class ViewController : UIViewController, MovieServiceDelegate {
     
     
     func DidFinishGettingNow_Playing(results: [Results]?, error: Error?) {
+        self.Now_Playin.removeAll()
         print("Now_pla")
         guard let e = error else {
             self.Now_Playin  = results!
@@ -98,6 +101,7 @@ class ViewController : UIViewController, MovieServiceDelegate {
     }
     
     func DidFinishGettingTop_rated(results: [Results]?, error: Error?) {
+        self.TopRated.removeAll()
          print("Toprated")
         guard let e = error else {
             self.TopRated = results!
@@ -110,6 +114,7 @@ class ViewController : UIViewController, MovieServiceDelegate {
     
     func DidFinishGettingPopular(results: [Results]?, error: Error?) {
         print("Popular")
+        self.Popular.removeAll()
         guard let e = error else {
             self.Popular = results!
              ColViews[3].reloadData()
@@ -119,7 +124,7 @@ class ViewController : UIViewController, MovieServiceDelegate {
         print(e)
         
     }
-
+  
 
 
     func DidFinishSearching(results: [Results]?, error: Error?) {
@@ -141,76 +146,11 @@ class ViewController : UIViewController, MovieServiceDelegate {
         print(e)
     }
     
+    func DidCatchingConnectionFailure(alert: UIAlertController) {
+        self.present(alert, animated: true, completion: nil)
+    }
     
-    
-   
-   
-//       if (self.results[indexPath.row].poster_path != nil )
-//
-//       {
-//        let url = URL(string: "https://image.tmdb.org/t/p/w500/" +  self.results[indexPath.row].poster_path! )
-//        print(url)
-//        cell.image.kf.setImage(with: url)
-//
-//       }else{
-//        print( "ELSE DO")
-//        cell.image.image = UIImage(named : "not.jpg")
-//        }
-//        cell.image.tag   = indexPath.row
-//
-    //        cell.label.text = self.results[indexPath.row].original_title }
-    
-    
-//    @IBAction func Click(_ sender: UIButton) {
-//
-//        switch sender.tag {
-//        case 1  :  self.NetworkService.Upcoming(); break ;
-//        case 3  :  self.NetworkService.Top_Rated() ;break  ;
-//        case 4  :  self.NetworkService.Now_Playing();break ;
-//        case 5  :  self.NetworkService.Popular() ;break ;
-//
-//        default : print( "error")
-//        }
-//        
-//        self.setup()
-//        sender.setTitleColor(UIColor.white, for: .normal)
-//        sender.backgroundColor = UIColor(red: 5 / 255, green: 122 / 255 , blue: 251 / 255 , alpha: 1.0)
-//        sender.layer.shadowColor = UIColor.black.cgColor
-//        sender.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
-//        sender.layer.shadowOpacity = 0.5
-//    }
-//
-    
-    
-//    @IBAction func Search_Click(_ sender: UIButton) {
-//
-//
-//        if ( self.SearchText_F.alpha == 0.0)
-//        {
-//
-//
-//            self.SearchText_F.frame.size.width = 400
-//            self.SearchText_F.isUserInteractionEnabled   = true
-//            self.SearchText_F.alpha = 1.0
-//            self.SearchText_F.placeholder   = "Search Movies"
-//            self.SearchText_F.becomeFirstResponder()
-//
-//        }else{
-//            self.NetworkService.Search(keyword: self.SearchText_F.text)
-//            self.TitleLabel.text  = "  results for '" + SearchText_F.text! + "'"
-//            self.setup()
-//        }
-//
 
-  
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.view.endEditing(true)
-//        self.SearchText_F.text = ""
-//        self.SearchText_F.alpha = 0.0
-//        self.SearchText_F.frame.size.width = 0
-//
-//    }
     
     @objc func MenuClick(_ sender: UIButton)
         
