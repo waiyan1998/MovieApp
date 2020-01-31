@@ -11,19 +11,16 @@ import Alamofire
 import ObjectMapper
 import Kingfisher
 
+
+
 class ViewController : UIViewController, MovieServiceDelegate {
     
+
     
- 
-    
-    
-    
-   
-    
-   
-    @IBOutlet weak var SearchTF: UISearchBar!
-    
+    var SearchTF : UISearchBar!
+    let searchContoller = UISearchController(searchResultsController: nil)
     @IBOutlet weak var ScrollView: UIScrollView!
+    
     
     var PageIndex : Int = 0
     var Indicator :  UIView = {
@@ -53,21 +50,22 @@ class ViewController : UIViewController, MovieServiceDelegate {
     var MenuTitle   = ["UpComing","TopRated","Nowplaying","Popular"]
     
     
-    @IBOutlet weak var TitleLabel: UILabel!
+    
     
  
     override func viewDidLoad() {
         super.viewDidLoad()
         
+      
         
-        self.SearchTF.delegate = self
+   
         self.NetworkService.delegate = self
         self.NetworkService.Upcoming()
         self.NetworkService.Top_Rated()
         self.NetworkService.Now_Playing()
         self.NetworkService.Popular()
         self.Setup()
-        
+       
         
    
     }
@@ -155,21 +153,26 @@ class ViewController : UIViewController, MovieServiceDelegate {
     @objc func MenuClick(_ sender: UIButton)
         
     {
+        self.ColViews[sender.tag].reloadData()
+        
         switch sender.tag  {
             
         case 0 :
             
-            self.ScrollView.contentOffset.x  = 0
-            self.Indicator.frame.origin.x    =  (sender.frame.origin.x + 20)
+            UIView.animate(withDuration: 0.3) {
+                self.ScrollView.contentOffset.x  = 0
+                self.Indicator.frame.origin.x    =  (sender.frame.origin.x + 20)
+            }
             
-        case 1 :
-            self.ScrollView.contentOffset.x  = CGFloat( 1 * ScrollView.frame.size.width )
             
-        case 2 :
-            self.ScrollView.contentOffset.x  = CGFloat( 2 * ScrollView.frame.size.width )
+        case 1 :UIView.animate(withDuration: 0.3) {
+            self.ScrollView.contentOffset.x  = CGFloat( 1 * self.ScrollView.frame.size.width ) }
             
-        case 3 :
-            self.ScrollView.contentOffset.x  = CGFloat( 3 * ScrollView.frame.size.width )
+        case 2 :UIView.animate(withDuration: 0.3) {
+            self.ScrollView.contentOffset.x  = CGFloat( 2 * self.ScrollView.frame.size.width ) }
+            
+        case 3 :UIView.animate(withDuration: 0.3) {
+            self.ScrollView.contentOffset.x  = CGFloat( 3 * self.ScrollView.frame.size.width ) }
          
             
         default:
@@ -187,12 +190,24 @@ class ViewController : UIViewController, MovieServiceDelegate {
         print("zzz")
         
         var i  : CGFloat = 0
-        self.TitleLabel.text = "  UpComing"
-        self.Indicator.frame.origin  = CGPoint(x: 20 , y: 160)
+        self.navigationItem.title = "UpComing"
+        
+        
+        self.SearchTF = searchContoller.searchBar
+        self.SearchTF.delegate   = self
+        searchContoller.searchResultsUpdater = self
+        searchContoller.searchBar.searchBarStyle = .minimal
+        searchContoller.hidesNavigationBarDuringPresentation = true
+        searchContoller.obscuresBackgroundDuringPresentation = true
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.searchController    = searchContoller
+        
+        self.Indicator.frame.origin  = CGPoint(x: 20 , y: 45)
         self.Indicator.frame.size   = CGSize(width: (self.view.frame.width / 4) - 40  , height: 3)
         self.ScrollView.contentSize.width = self.view.frame.width * 4
         self.view.addSubview(Indicator)
         
+      
         for n in 0...Menubar.count - 1 {
             
             Menubar[n].setTitleColor(.lightGray, for: .normal)
@@ -200,7 +215,7 @@ class ViewController : UIViewController, MovieServiceDelegate {
             Menubar[n].titleLabel?.font = .systemFont(ofSize: 13, weight: .regular)
             Menubar[n].addTarget(self , action: #selector(MenuClick(_:)), for: .touchUpInside)
             Menubar[n].frame.origin.x = CGFloat(n) * (self.view.frame.size.width / 4 )
-            Menubar[n].frame.origin.y = 135
+            Menubar[n].frame.origin.y = 20
             Menubar[n].frame.size = CGSize(width: self.view.frame.size.width / 4 , height: 25)
             Menubar[n].tag = n
             self.view.addSubview(Menubar[n])
@@ -242,16 +257,19 @@ extension ViewController : UIScrollViewDelegate
 {
     
     
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        
+        self.PageIndex = Int(ScrollView.contentOffset.x / ScrollView.frame.size.width)
+        self.ColViews[PageIndex].reloadData()
         if ( scrollView.contentOffset.x  > 0 )
         {
             self.Indicator.frame.origin.x = (scrollView.contentOffset.x / 4 ) + 20
             print(scrollView.contentOffset.x )
+            self.navigationItem.title = MenuTitle[PageIndex]
         }
         
-        self.PageIndex = Int(ScrollView.contentOffset.x / ScrollView.frame.size.width)
+        
         
         for MenuBtn in Menubar
         {
@@ -259,7 +277,7 @@ extension ViewController : UIScrollViewDelegate
             if ( PageIndex == MenuBtn.tag){
                 
                 MenuBtn.setTitleColor(Indicator.backgroundColor, for: .normal)
-                self.TitleLabel.text = "  " + MenuTitle[PageIndex]
+                
             }
             
         }
@@ -273,36 +291,54 @@ extension ViewController : UIScrollViewDelegate
 }
 
 
+extension ViewController :  UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        //searchContoller.obscuresBackgroundDuringPresentation = false
+        
+        
+        
+    }
+    
+    
+    
+    
+}
+
+
 
 extension ViewController : UISearchBarDelegate {
     
     
-   
-    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        
+        self.searchContoller.obscuresBackgroundDuringPresentation = false
+        return true
+    }
+
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         
         if (SearchTF.text != "") {
+            print("Search do ")
             self.NetworkService.Search(keyword: self.SearchTF.text)
             
             Closed()
-            self.TitleLabel.text = " results of'" + SearchTF.text! + "'"
-      
-            self.SearchTF.resignFirstResponder()
+            
+            self.navigationItem.title = " results of '" + SearchTF.text! + "'"
+//            self.navigationController?.setNavigationBarHidden(false , animated: true )
+            //self.SearchTF.resignFirstResponder()
         }
         
     }
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.SearchTF.showsCancelButton = true
-    }
-    
+ 
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.SearchTF.text = ""
-        self.TitleLabel.text = "  " + MenuTitle[PageIndex]
-        self.Indicator.alpha = 0.0
+        
+        self.navigationItem.title =  MenuTitle[PageIndex]
+        self.Indicator.alpha = 1.0
         self.ScrollView.isScrollEnabled = true
         for b in Menubar {
             b.alpha = 1.0
@@ -312,8 +348,8 @@ extension ViewController : UISearchBarDelegate {
             
             V.reloadData()
         }
-        self.SearchTF.showsCancelButton = false
-        self.SearchTF.resignFirstResponder()
+//        self.SearchTF.showsCancelButton = false
+//        self.SearchTF.resignFirstResponder()
         
     }
     

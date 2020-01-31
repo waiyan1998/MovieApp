@@ -19,6 +19,9 @@ class CollectionView: UICollectionView {
         self.showsVerticalScrollIndicator = false
         self.register(Cellnib , forCellWithReuseIdentifier: "cell")
         self.backgroundColor = .clear
+        
+        self.bounces = false
+        
 //        self.layer.borderWidth = 2
 //        self.layer.borderColor = UIColor.lightGray.cgColor
     }
@@ -79,8 +82,7 @@ extension ViewController : UICollectionViewDataSource , UICollectionViewDelegate
     
     
     
-    
-    
+        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
        
@@ -136,13 +138,13 @@ extension ViewController : UICollectionViewDataSource , UICollectionViewDelegate
             print("default")
             
                  }
-            
+
            }else{
-                
+
             DataShow(cell , SeResults , indexPath)
-                
+
             }
-            
+
             
             return cell
         }
@@ -153,48 +155,77 @@ extension ViewController : UICollectionViewDataSource , UICollectionViewDelegate
         
     
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       print("Clicked")
-       print(indexPath.row)
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let D_ViewController = storyBoard.instantiateViewController(withIdentifier: "detail") as! DetailViewController
-        self.present(D_ViewController , animated:true, completion:nil)
-        if(SearchTF.text == "")
-        {
-        switch PageIndex {
-        case 0 : D_ViewController.id_to_DVC(id: Upcoming[indexPath.row].id! )
-        case 1 : D_ViewController.id_to_DVC(id: TopRated[indexPath.row].id! )
-        case 2 : D_ViewController.id_to_DVC(id: Now_Playin[indexPath.row].id! )
-        case 3 : D_ViewController.id_to_DVC(id: Popular[indexPath.row].id! )
-        default:
-            print("DID SELECTED IN COLVIEW CELL")
-        }
-        }else{
-            D_ViewController.id_to_DVC(id: SeResults[indexPath.row].id!)
-        }
-        
-        
-    }
-    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//       print("Clicked")
+//       print(indexPath.row)
+//
+////        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+////        let D_ViewController = storyBoard.instantiateViewController(withIdentifier: "detail") as! DetailViewController
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+//        print(cell.tag)
+//
+//        self.searchContoller.isActive = false
+//        self.searchContoller.definesPresentationContext = true
+//        self.performSegue(withIdentifier: "detail", sender: (Any).self)
+//
+//
+//////        if(SearchTF.text == "")
+//////        {
+////        switch PageIndex {
+////        case 0 : D_ViewController.id_to_DVC(id: Upcoming[indexPath.row].id! )
+////        case 1 : D_ViewController.id_to_DVC(id: TopRated[indexPath.row].id! )
+////        case 2 : D_ViewController.id_to_DVC(id: Now_Playin[indexPath.row].id! )
+////        case 3 : D_ViewController.id_to_DVC(id: Popular[indexPath.row].id! )
+////        default:
+////            print("DID SELECTED IN COLVIEW CELL")
+//////        }
+//////        }else{
+//////            D_ViewController.id_to_DVC(id: SeResults[indexPath.row].id!)
+//////        }
+//
+//        print(" i touch cell")
+//    }
+//
+   
     
     func configureCell(_ cell: UICollectionViewCell)
        {
             let imageView = cell.viewWithTag(1) as! UIImageView
             imageView.layer.cornerRadius = 10
         
+            let TapGuesture = UITapGestureRecognizer()
+                TapGuesture.addTarget(self, action: #selector(Tap(sender:)))
+        
+                cell.addGestureRecognizer(TapGuesture)
         
             print("ConfigCell")
         
         
         }
         
+    @objc func Tap( sender : UITapGestureRecognizer )
+    {
+        print(sender.view?.tag as Any)
+        print("Clicked")
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let D_ViewController = storyBoard.instantiateViewController(withIdentifier: "detail") as! DetailViewController
         
+        self.searchContoller.isActive = false 
+        
+        D_ViewController.IdtoDVC(id: sender.view!.tag , VC : self )
+        
+     self.present(D_ViewController, animated: true , completion: nil)
+     
+    }
+    
+    
         
      func DataShow(_ cell : UICollectionViewCell , _ Data : [Results]? , _ IndexPath : IndexPath)
        {
         
                 let ImageView  = cell.viewWithTag(1) as! UIImageView
-                
+                cell.tag = Data![IndexPath.row].id!
+       
                 if (Data![IndexPath.row].poster_path != nil )
                 {
                     let url = URL(string: "https://image.tmdb.org/t/p/w500/" +  Data![IndexPath.row].poster_path! )

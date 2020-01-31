@@ -17,6 +17,7 @@ class Results  : Mappable{
     required init?(map: Map) {
         
     }
+    
     var id  : Int?
     var adult : Bool!
     var backdrop_path :String?

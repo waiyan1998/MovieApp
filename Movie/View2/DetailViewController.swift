@@ -12,9 +12,21 @@ import MediaPlayer
 import WebKit
 
 
-class DetailViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,DetailServiceDelegate,WKNavigationDelegate{
+
+
+
+
+class DetailViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,DetailServiceDelegate,WKNavigationDelegate {
+    
+    
+   
     
 
+    
+   
+    
+    
+   
     @IBOutlet weak var BG_ImageView: UIImageView!
     @IBOutlet weak var Poster_ImageView: UIImageView!
     @IBOutlet weak var Title_Name_Label: UILabel!
@@ -29,38 +41,49 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     @IBOutlet weak var Credits_ColView: UICollectionView!
     var D_Service = DetailService()
     var casts = [Cast]()
+    var VC : ViewController!
     
     
     
     override func viewDidLoad() {
     
         super.viewDidLoad()
+        
+        
         self.Poster_ImageView.layer.borderWidth = 1
         self.Poster_ImageView.layer.borderColor = UIColor.white.cgColor
-      
+        
         self.D_Service.Delegate = self
+       
         
         
         // Do any additional setup after loading the view.
     }
-    func id_to_DVC(id : Int ) -> Void {
-        
-        self.D_Service.GetDetail(movie_id: id)
-        self.D_Service.GetCasts(movie_id: id)
+    
+   
+    
+    
+    func IdtoDVC (id : Int , VC : ViewController ){
+     self.VC = VC
+     self.D_Service.GetDetail(MovieId: id )
+     self.D_Service.GetCasts(MovieId: id )
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-       
-    }
     
+
     @IBAction func Cancel_Click(_ sender: UIButton) {
+        
         self.dismiss(animated: true, completion: nil)
         
+        self.VC.SearchTF.text  = self.VC.navigationItem.title
+        
+        
         
     }
     
     
     
+   
     
    func GettingFinishDetail(videos: [Videos], s_lang: [Spoken_Lang]?, results: Detail?, genres: String?, error: Error?) {
         
@@ -122,13 +145,18 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
    
     func Show_Viedo(url: URL) {
         
-        let myURLRequest:URLRequest = URLRequest(url:url)
-       let WebView  = WKWebView(frame: CGRect(x:0, y:0, width: self.Container_ofViedoView.frame.width , height:self.Container_ofViedoView.frame.height))
         
-        self.Container_ofViedoView.addSubview(WebView)
-        WebView.navigationDelegate = self
-        WebView.load(myURLRequest)
-        WebView.allowsBackForwardNavigationGestures = true
+        DispatchQueue.main.async {
+        let myURLRequest:URLRequest = URLRequest(url:url)
+        let WebView  = WKWebView(frame: CGRect(x:0, y:0, width: self.Container_ofViedoView.frame.width , height:self.Container_ofViedoView.frame.height))
+            self.Container_ofViedoView.addSubview(WebView)
+            WebView.navigationDelegate = self
+            WebView.load(myURLRequest)
+            WebView.allowsBackForwardNavigationGestures = true
+        }
+    
+        
+      
         
         
     }

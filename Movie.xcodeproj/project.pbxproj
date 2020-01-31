@@ -26,6 +26,7 @@
 		34605464235B7FE600D76623 /* not.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 34605463235B7FE600D76623 /* not.jpg */; };
 		347B4644235E0ECE001D549C /* icons8-delete-64(1).png in Resources */ = {isa = PBXBuildFile; fileRef = 347B4643235E0ECE001D549C /* icons8-delete-64(1).png */; };
 		347B4646235E1104001D549C /* icons8-search-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 347B4645235E1103001D549C /* icons8-search-64.png */; };
+		348EBAF223E4832200F752AB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348EBAF123E4832200F752AB /* CollectionViewCell.swift */; };
 		BA9D75B8CED2E0A6747BC088 /* Pods_Movie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F38150764174DD2A1B5C25F /* Pods_Movie.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		34605463235B7FE600D76623 /* not.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = not.jpg; sourceTree = "<group>"; };
 		347B4643235E0ECE001D549C /* icons8-delete-64(1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-delete-64(1).png"; sourceTree = "<group>"; };
 		347B4645235E1103001D549C /* icons8-search-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-search-64.png"; sourceTree = "<group>"; };
+		348EBAF123E4832200F752AB /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		373D0D46FBAB8A88316FBE58 /* Pods-Movie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie.release.xcconfig"; path = "Target Support Files/Pods-Movie/Pods-Movie.release.xcconfig"; sourceTree = "<group>"; };
 		3F38150764174DD2A1B5C25F /* Pods_Movie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98F82DEEA3855BFCB789A289 /* Pods-Movie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie.debug.xcconfig"; path = "Target Support Files/Pods-Movie/Pods-Movie.debug.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				341EB49823CF37D40096A981 /* Cell.xib */,
+				348EBAF123E4832200F752AB /* CollectionViewCell.swift */,
 				341EB49623CF37D30096A981 /* CollectionView.swift */,
 				344485DD23544E4300E1C8FD /* ViewController.swift */,
 				3444860C23544FAF00E1C8FD /* NetworkService.swift */,
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				348EBAF223E4832200F752AB /* CollectionViewCell.swift in Sources */,
 				344485DE23544E4300E1C8FD /* ViewController.swift in Sources */,
 				3444860D23544FAF00E1C8FD /* NetworkService.swift in Sources */,
 				34045627235CC64200A244C6 /* DetailViewController.swift in Sources */,

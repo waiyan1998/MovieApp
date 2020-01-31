@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hvn-kJ-OCd">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,60 +9,52 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation View Controller-->
+        <scene sceneID="Lby-Mk-NWm">
+            <objects>
+                <navigationController id="hvn-kJ-OCd" customClass="NavigationViewController" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="iYO-bT-hRO">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ghc-G0-ykS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o9V-Zq-uSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1587" y="99"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="756"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMH-T9-TRa">
-                                <rect key="frame" x="0.0" y="93" width="414" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="lu7-OZ-2Pl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="30"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSK-ow-aN1">
-                                <rect key="frame" x="0.0" y="189" width="414" height="673"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2I1-Cd-Hhk">
+                                <rect key="frame" x="0.0" y="100" width="414" height="622"/>
                                 <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="NRF-aG-LHe"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Mvk-Lh-pks"/>
                                 </connections>
                             </scrollView>
-                            <searchBar contentMode="redraw" placeholder="search movies" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKQ-uf-4ED">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="hR1-FH-OeZ"/>
-                                </constraints>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="zmE-Sz-FrD"/>
-                                </connections>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="wSK-ow-aN1" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="2gs-y1-Spc"/>
-                            <constraint firstItem="aKQ-uf-4ED" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7IH-1n-7wP"/>
-                            <constraint firstItem="wSK-ow-aN1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Nce-TW-yrB"/>
-                            <constraint firstItem="aKQ-uf-4ED" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="X4m-jn-uHA"/>
-                            <constraint firstItem="jMH-T9-TRa" firstAttribute="top" secondItem="aKQ-uf-4ED" secondAttribute="bottom" constant="5" id="XhA-ZV-nnK"/>
-                            <constraint firstItem="aKQ-uf-4ED" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="aDk-Lv-t3n"/>
-                            <constraint firstItem="wSK-ow-aN1" firstAttribute="top" secondItem="jMH-T9-TRa" secondAttribute="bottom" constant="60" id="eVc-fW-tus"/>
-                            <constraint firstItem="jMH-T9-TRa" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="lfJ-Zo-gJs"/>
-                            <constraint firstItem="wSK-ow-aN1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="v02-qy-eHx"/>
-                            <constraint firstItem="jMH-T9-TRa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zLk-dr-2bS"/>
+                            <constraint firstItem="2I1-Cd-Hhk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ll5-UO-tN5"/>
+                            <constraint firstItem="2I1-Cd-Hhk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="eI2-Ob-ipT"/>
+                            <constraint firstItem="2I1-Cd-Hhk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="h6r-Hu-Na1"/>
+                            <constraint firstItem="2I1-Cd-Hhk" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ytk-Sk-rJB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="rh9-6S-ufG"/>
                     <connections>
-                        <outlet property="ScrollView" destination="wSK-ow-aN1" id="Leq-OO-Zh2"/>
-                        <outlet property="SearchTF" destination="aKQ-uf-4ED" id="8NI-Jt-WAc"/>
-                        <outlet property="TitleLabel" destination="jMH-T9-TRa" id="6sc-Zi-8YP"/>
+                        <outlet property="ScrollView" destination="2I1-Cd-Hhk" id="fLV-GO-vqM"/>
+                        <segue destination="mqQ-ja-cq4" kind="popoverPresentation" identifier="detail" popoverAnchorView="2I1-Cd-Hhk" id="Ew0-Re-z5G">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -303,7 +295,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oa1-Zc-jo0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="939.13043478260875" y="105.13392857142857"/>
+            <point key="canvasLocation" x="1055" y="-846"/>
         </scene>
     </scenes>
     <resources>
