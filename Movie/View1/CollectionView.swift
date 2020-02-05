@@ -86,7 +86,7 @@ extension ViewController : UICollectionViewDataSource , UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
        
-        if ( SearchTF.text == "")
+        if (self.searchContoller.isActive != true && self.SearchTF.text == "" )
         {
         switch collectionView.tag {
         case  0 : if (Upcoming.count != 0 )
@@ -105,8 +105,8 @@ extension ViewController : UICollectionViewDataSource , UICollectionViewDelegate
         {
           return SeResults.count
         }
-        
-        
+
+  //return 0
   
     }
         
@@ -210,7 +210,7 @@ extension ViewController : UICollectionViewDataSource , UICollectionViewDelegate
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let D_ViewController = storyBoard.instantiateViewController(withIdentifier: "detail") as! DetailViewController
         
-        self.searchContoller.isActive = false 
+      self.searchContoller.isActive = false
         
         D_ViewController.IdtoDVC(id: sender.view!.tag , VC : self )
         

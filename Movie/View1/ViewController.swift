@@ -18,7 +18,8 @@ class ViewController : UIViewController, MovieServiceDelegate {
 
     
     var SearchTF : UISearchBar!
-    let searchContoller = UISearchController(searchResultsController: nil)
+    let searchContoller =   UISearchController (searchResultsController: nil)
+    
     @IBOutlet weak var ScrollView: UIScrollView!
     
     
@@ -196,12 +197,15 @@ class ViewController : UIViewController, MovieServiceDelegate {
         self.SearchTF = searchContoller.searchBar
         self.SearchTF.delegate   = self
         searchContoller.searchResultsUpdater = self
-        searchContoller.searchBar.searchBarStyle = .minimal
-        searchContoller.hidesNavigationBarDuringPresentation = true
-        searchContoller.obscuresBackgroundDuringPresentation = true
+        
+        self.searchContoller.searchBar.searchBarStyle = .minimal
+        self.searchContoller.hidesNavigationBarDuringPresentation = true
+        self.searchContoller.obscuresBackgroundDuringPresentation = false
+        
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController    = searchContoller
-        
+        //self.navigationController?.navigationBar.set
+        self.navigationController?.definesPresentationContext = true
         self.Indicator.frame.origin  = CGPoint(x: 20 , y: 45)
         self.Indicator.frame.size   = CGSize(width: (self.view.frame.width / 4) - 40  , height: 3)
         self.ScrollView.contentSize.width = self.view.frame.width * 4
@@ -249,19 +253,38 @@ class ViewController : UIViewController, MovieServiceDelegate {
             
         }
     }
+    
+    
+    func RefreshUI() {
+        
+        self.navigationItem.title =  MenuTitle [self.PageIndex]
+        for i in Menubar{
+            i.alpha = 1.0
+        }
+        self.Indicator.alpha = 1.0
+        for i in ColViews
+        {
+            i.reloadData()
+        }
+        
+        
+        
+        
+        
+    }
+    
 
 }
 
 extension ViewController : UIScrollViewDelegate
 
 {
-    
-    
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         self.PageIndex = Int(ScrollView.contentOffset.x / ScrollView.frame.size.width)
-        self.ColViews[PageIndex].reloadData()
+        //self.ColViews[PageIndex].reloadData()
+        
         if ( scrollView.contentOffset.x  > 0 )
         {
             self.Indicator.frame.origin.x = (scrollView.contentOffset.x / 4 ) + 20
@@ -292,8 +315,15 @@ extension ViewController : UIScrollViewDelegate
 
 
 extension ViewController :  UISearchResultsUpdating {
+    
     func updateSearchResults(for searchController: UISearchController) {
-        
+//        self.searchContoller.obscuresBackgroundDuringPresentation    = false
+        self.SeResults.removeAll()
+         for c in ColViews
+         {
+            c.reloadData()
+
+         }
         //searchContoller.obscuresBackgroundDuringPresentation = false
         
         
@@ -307,18 +337,15 @@ extension ViewController :  UISearchResultsUpdating {
 
 
 
-extension ViewController : UISearchBarDelegate {
+extension ViewController : UISearchBarDelegate ,UISearchControllerDelegate {
     
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        
-        self.searchContoller.obscuresBackgroundDuringPresentation = false
-        return true
-    }
 
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
+        
+
+       
         
         if (SearchTF.text != "") {
             print("Search do ")
@@ -327,8 +354,7 @@ extension ViewController : UISearchBarDelegate {
             Closed()
             
             self.navigationItem.title = " results of '" + SearchTF.text! + "'"
-//            self.navigationController?.setNavigationBarHidden(false , animated: true )
-            //self.SearchTF.resignFirstResponder()
+//
         }
         
     }
@@ -357,6 +383,7 @@ extension ViewController : UISearchBarDelegate {
     
     
 }
+
 
 
 
