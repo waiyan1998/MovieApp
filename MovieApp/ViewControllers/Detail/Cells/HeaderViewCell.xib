@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HeaderViewCell" customModule="MovieApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="294" height="140"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="294" height="140"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hV9-8A-vYZ">
+                        <rect key="frame" x="0.0" y="10" width="294" height="115"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="115" id="Jmp-Bm-lf4"/>
+                            <constraint firstAttribute="width" constant="294" id="N7x-rI-Q02"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iXG-ha-pox">
+                        <rect key="frame" x="0.0" y="63" width="50" height="77"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="iXG-ha-pox" secondAttribute="height" multiplier="0.65:1" id="A7L-gd-d1r"/>
+                            <constraint firstAttribute="width" constant="50" id="da3-n1-sQQ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="hV9-8A-vYZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6HK-dN-5ce"/>
+                <constraint firstItem="hV9-8A-vYZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="HuI-sW-MIJ"/>
+                <constraint firstAttribute="bottom" secondItem="hV9-8A-vYZ" secondAttribute="bottom" constant="15" id="bEV-Ff-pHX"/>
+                <constraint firstItem="iXG-ha-pox" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="cxe-LF-nsM"/>
+                <constraint firstAttribute="bottom" secondItem="iXG-ha-pox" secondAttribute="bottom" id="uUB-h7-12R"/>
+                <constraint firstAttribute="trailing" secondItem="hV9-8A-vYZ" secondAttribute="trailing" id="xta-Wb-6bM"/>
+            </constraints>
+            <size key="customSize" width="294" height="141"/>
+            <connections>
+                <outlet property="BackPosterImageView" destination="hV9-8A-vYZ" id="c7G-fz-zji"/>
+                <outlet property="PosterImageView" destination="iXG-ha-pox" id="JNE-8v-to5"/>
+                <outlet property="width" destination="N7x-rI-Q02" id="4Nk-Z0-yD8"/>
+            </connections>
+            <point key="canvasLocation" x="170.99236641221373" y="19.014084507042256"/>
+        </collectionViewCell>
+    </objects>
+</document>
